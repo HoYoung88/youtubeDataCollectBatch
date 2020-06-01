@@ -1,4 +1,4 @@
-import config from '../../../../../config.json';
+import config from '../../../../config/config.json';
 import { google, youtubeAnalytics_v2 } from 'googleapis';
 import dimensions from './Dimensions';
 import metrics from './Metrics';

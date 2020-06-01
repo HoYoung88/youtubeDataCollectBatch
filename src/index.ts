@@ -30,7 +30,7 @@ import log from './logger';
       await ytDateService.asyncAddChannelData();
 
       log.info(
-        '%s(%s) youtube analytics install success',
+        '%s(%s) youtube date install success',
         createrInfo.channelName,
         createrInfo.channelId
       );
