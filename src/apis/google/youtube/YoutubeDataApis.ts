@@ -3,6 +3,7 @@ import getProp from '../../../utils/getProp';
 import moment from 'moment';
 import part from './part';
 import StandardParameters from './StandardParameters';
+
 import {
   ChannelListResponse,
   Playlist,
@@ -14,6 +15,7 @@ import { ChannelEntity } from '../../../entity/data/Channel';
 import { PlaylistEntity } from '../../../entity/data/Playlist';
 import { PlaylistItemsEntity } from '../../../entity/data/PlaylistItem';
 import { VideoEntity } from '../../../entity/data/Video';
+import { YoutubeApisError } from './error/YoutubeApisError';
 
 const youtubeapis = google.youtube({
   version: 'v3',
@@ -122,7 +124,7 @@ export default class YoutubeDataApis {
         throw new Error('no item');
       }
     } catch (e) {
-      throw new Error(e);
+      throw new YoutubeApisError('asyncChannel', e);
     }
   }
 
@@ -161,7 +163,7 @@ export default class YoutubeDataApis {
 
       return entitys;
     } catch (e) {
-      throw new Error(e);
+      throw new YoutubeApisError('asyncPlaylists', e);
     }
   }
 
@@ -197,7 +199,7 @@ export default class YoutubeDataApis {
       return entitys;
     } catch (e) {
       console.log('========= playlistItem');
-      throw new Error(e);
+      throw new YoutubeApisError('asyncPlaylistItem', e);
     }
   }
 
@@ -254,7 +256,7 @@ export default class YoutubeDataApis {
       });
       return entitys;
     } catch (e) {
-      throw new Error(e);
+      throw new YoutubeApisError('asyncVideos', e);
     }
   }
 }

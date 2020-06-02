@@ -55,21 +55,18 @@ export class YoutubeAnalyticsService {
   async asyncAddChannelAnalyitcs(date: Moment): Promise<void> {
     try {
       const pDate = date.format('YYYY-MM-DD');
-      this.repositorys.channel.save(
-        await this.analyticsApis.asyncChannel(pDate)
+      const channel = await this.analyticsApis.asyncChannel(pDate);
+      const channelTrafficSource = await this.analyticsApis.asyncTrafficSource(
+        pDate
       );
+      const channelAgeGroup = await this.analyticsApis.asyncAgeGroup(pDate);
+      const channelGender = await this.analyticsApis.asyncGender(pDate);
 
-      this.repositorys.channelTrafficSource.save(
-        await this.analyticsApis.asyncTrafficSource(pDate)
-      );
+      await this.repositorys.channel.save(channel);
+      await this.repositorys.channelTrafficSource.save(channelTrafficSource);
+      await this.repositorys.channelAgeGroup.save(channelAgeGroup);
+      await this.repositorys.channelGender.save(channelGender);
 
-      this.repositorys.channelAgeGroup.save(
-        await this.analyticsApis.asyncAgeGroup(pDate)
-      );
-
-      this.repositorys.channelGender.save(
-        await this.analyticsApis.asyncGender(pDate)
-      );
       return Promise.resolve();
     } catch (e) {
       return Promise.reject(e);
@@ -79,21 +76,25 @@ export class YoutubeAnalyticsService {
   async asyncAddVideoAnalitcs(date: Moment, videoIds: string[]): Promise<void> {
     try {
       const pDate = date.format('YYYY-MM-DD');
-      this.repositorys.video.save(
-        await this.analyticsApis.asyncVideo(pDate, videoIds)
+      const video = await this.analyticsApis.asyncVideo(pDate, videoIds);
+      const videoTrafficSource = await this.analyticsApis.asyncVideoTrafficSource(
+        pDate,
+        videoIds
+      );
+      const videoAgeGroup = await this.analyticsApis.asyncVideoAgeGroup(
+        pDate,
+        videoIds
+      );
+      const videoGender = await this.analyticsApis.asyncVideoGender(
+        pDate,
+        videoIds
       );
 
-      this.repositorys.videoTrafficSource.save(
-        await this.analyticsApis.asyncVideoTrafficSource(pDate, videoIds)
-      );
+      await this.repositorys.video.save(video);
+      await this.repositorys.videoTrafficSource.save(videoTrafficSource);
+      await this.repositorys.videoAgeGroup.save(videoAgeGroup);
+      await this.repositorys.videoGender.save(videoGender);
 
-      this.repositorys.videoAgeGroup.save(
-        await this.analyticsApis.asyncVideoAgeGroup(pDate, videoIds)
-      );
-
-      this.repositorys.videoGender.save(
-        await this.analyticsApis.asyncVideoGender(pDate, videoIds)
-      );
       return Promise.resolve();
     } catch (e) {
       return Promise.reject(e);
