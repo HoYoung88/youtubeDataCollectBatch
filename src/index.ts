@@ -27,7 +27,7 @@ import log from './logger';
         createrInfo
       );
 
-      // await ytDateService.asyncAddChannelData();
+      await ytDateService.asyncAddChannelData();
 
       log.info(
         '%s(%s) youtube date install success',
@@ -43,13 +43,15 @@ import log from './logger';
 
       let sCollectDate = moment(createrInfo.collectDate);
       const eCollectDate = moment(moment()).add(-3, 'days');
-      log.info(
-        '%s(%s) add analytics install Date:: %s',
-        createrInfo.channelName,
-        createrInfo.channelId,
-        sCollectDate.format('YYYY-MM-DD')
-      );
+
       while (moment.duration(eCollectDate.diff(sCollectDate)).asDays() >= 0) {
+        log.info(
+          '%s(%s) add analytics install Date:: %s',
+          createrInfo.channelName,
+          createrInfo.channelId,
+          sCollectDate.format('YYYY-MM-DD')
+        );
+
         await ytAnalyticsService.asyncAddChannelAnalyitcs(sCollectDate);
 
         const videoData = await ytDateService.asyncGetVideos(sCollectDate);
