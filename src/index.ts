@@ -27,7 +27,7 @@ import log from './logger';
         createrInfo
       );
 
-      // await ytDateService.asyncAddChannelData();
+      await ytDateService.asyncAddChannelData();
 
       log.info(
         '%s(%s) youtube date install success',
