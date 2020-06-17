@@ -27,7 +27,7 @@ import log from './logger';
         createrInfo
       );
 
-      await ytDateService.asyncAddChannelData();
+      // await ytDateService.asyncAddChannelData();
 
       log.info(
         '%s(%s) youtube date install success',
@@ -58,10 +58,7 @@ import log from './logger';
         const videoIds = videoData.map(({ videoId }) => videoId);
 
         if (videoIds.length > 0) {
-          const videos = arrayDivision(
-            videoData.map(({ videoId }) => videoId),
-            100
-          );
+          const videos = arrayDivision(videoIds, 100);
 
           for await (const video of videos) {
             await ytAnalyticsService.asyncAddVideoAnalitcs(sCollectDate, video);
