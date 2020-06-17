@@ -55,13 +55,17 @@ import log from './logger';
         await ytAnalyticsService.asyncAddChannelAnalyitcs(sCollectDate);
 
         const videoData = await ytDateService.asyncGetVideos(sCollectDate);
-        const videos = arrayDivision(
-          videoData.map(({ videoId }) => videoId),
-          100
-        );
+        const videoIds = videoData.map(({ videoId }) => videoId);
 
-        for await (const video of videos) {
-          await ytAnalyticsService.asyncAddVideoAnalitcs(sCollectDate, video);
+        if (videoIds.length > 0) {
+          const videos = arrayDivision(
+            videoData.map(({ videoId }) => videoId),
+            100
+          );
+
+          for await (const video of videos) {
+            await ytAnalyticsService.asyncAddVideoAnalitcs(sCollectDate, video);
+          }
         }
 
         sCollectDate = moment(sCollectDate).add(1, 'days');
